@@ -1,12 +1,13 @@
-/* data route */
-var url = `/data_json`;
 
+// --------------------------------------------------
+// | DATABASE STUFF |
+// --------------------------------------------------
 console.log("im in the JS file!")
 
 function loadJsonData() {
   console.log("im in the loadData function!")
 
-  d3.json(url).then((data) => {
+  d3.json(`/data_json`).then((data) => {
 
     console.log("im in the json data to do area!")
     
@@ -21,33 +22,61 @@ function loadCsvData(){
 
 }
 
-function loadMap(){
-  console.log("loading map");
 
-  // Creating our initial map object
-  // We set the longitude, latitude, and the starting zoom level
-  // This gets inserted into the div with an id of 'map'
-  var myMap = L.map("map", {
-    center: [45.52, -122.67],
-    zoom: 13
-  });
+// --------------------------------------------------
+// | MAP STUFF |
+// --------------------------------------------------
+var myMap = L.map("map", {
+  center: [37.7749, -122.4194],
+  zoom: 13
+});
 
-  // Adding a tile layer (the background map image) to our map
-  // We use the addTo method to add objects to our map
-  // L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-  //   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-  //   maxZoom: 18,
-  //   id: "mapbox.streets",
-  //   accessToken: "pk.eyJ1IjoicGd1aWxsZXJnYW4iLCJhIjoiY2szcDF2dG5zMjdjajNua29zdzBzNDV3NCJ9.en3jyfbLQe5qMhWKW-NZmA"
-  // }).addTo(myMap);
-  var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  });
 
-  basemap.addTo(myMap);
-};
+L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+  maxZoom: 18,
+  id: "mapbox.streets",
+  accessToken: API_KEY
+}).addTo(myMap);
 
 
 loadJsonData();
 loadCsvData();
-loadMap()
+
+
+// --------------------------------------------------
+// | HTML FORM STUFF |
+// --------------------------------------------------
+$("#my_form").submit(function(e) {
+
+  e.preventDefault();
+  
+  var categories = document.getElementById('cat_id').value;
+  var weightA = document.getElementById('weight_a_id').value;
+  var weightB = document.getElementById('weight_b_id').value;
+  var mapType = $('#map_type_id label.active input').val()
+  
+  console.log(categories);
+  console.log(weightA);
+  console.log(weightB);
+  console.log(mapType);
+
+});
+
+// --------------------------------------------------
+// | PLOTTING STUFF |
+// --------------------------------------------------
+var trace1 = {
+  x: ["beer", "wine", "martini", "margarita",
+    "ice tea", "rum & coke", "mai tai", "gin & tonic"],
+  y: [22.7, 17.1, 9.9, 8.7, 7.2, 6.1, 6.0, 4.6],
+  type: "bar"
+};
+
+var data = [trace1];
+
+var layout = {
+  title: "'Bar' Chart"
+};
+
+Plotly.newPlot("plot", data, layout);

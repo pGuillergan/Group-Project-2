@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="en-us">
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Me Hungry!!!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Me Hungry</title>
+
   <!-- <link rel="stylesheet" href="../css/reset.css"> -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
- 
-    <!-- Leaflet CSS & JS -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css"/>
-	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<!--   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
   crossorigin=""/>
   <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
   integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
   crossorigin=""></script>
- -->
 
-
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
-  <!-- <link rel="stylesheet" href="../css/styles.css"> -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+  <!-- <link rel="stylesheet" href="../css/styles.css"> -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <!-- Our CSS -->
+  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
 
 </head>
 
@@ -45,11 +45,7 @@
     <div class="row-fluid">
       <!-- ******************** Left Column ******************** --> 
       <div class="col-md-8"> 
-        <!-- <div class="jumbotron"> -->
-          <div id="map">
-            <!--MAP HERE-->
-          </div>
-        <!-- </div> -->
+        <div id="map"></div>
       </div>
       <!-- ******************** Right Column ******************** -->
       <div class="col-md-4"> 
@@ -57,23 +53,63 @@
           <div class="container">
 
             <row>
-              <h5 class="display-4">Input Filter:</h5>
+              <h2 class="display-4">Input Filter:</h2>
             </row>
 
-           
+            <row>
+              <form id="my_form">
+                <div class="form-group">
+                  <label for="cat_label">Categories</label>
+                  <input type="text" class="form-control" id="cat_id" aria-describedby="cat_Help" placeholder="Type categories">
+                  <small id="cat_Help" class="form-text text-muted">Enter category here, if more than one please use comma to separate</small>
+                </div>
+                <div class="form-group">
+                  <label for="weight_a_label">Weight A</label>
+                  <input type="text" class="form-control" id="weight_a_id" placeholder="Enter weight A here">
+                </div>
+                <div class="form-group">
+                  <label for="weight_b_label">Weight B</label>
+                  <input type="text" class="form-control" id="weight_b_id" placeholder="Enter weight B here">
+                </div>
+
+                <div class="btn-group btn-group-toggle" data-toggle="buttons" id="map_type_id">
+                  <label class="btn btn-secondary active">
+                    <input type="radio" name="normal_rb" id="normal_rb_id" autocomplete="off" value="normal" checked> Normal
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="heat_rb" id="heat_rb_id" autocomplete="off" value="heat"> Heat Map
+                  </label>
+                </div>
+                <hr>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </row>
+
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <br>
+  <br>
+
+  <hr>
+
+  <br>
+  <br>
+
+  <div id="plot"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <!-- API key -->
   <!-- <script type="text/javascript" src="config.js"></script> -->
+
+  <!-- JS -->
+  <!-- <script type="text/javascript" src="logic.js"></script> -->
   <script src="{{ url_for('static', filename='js/config.js') }}"></script>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-
 </body>
-
 </html>
